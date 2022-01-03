@@ -6,6 +6,13 @@ terraform {
       version = "> 2.72.0"
     }
   }
+
+  backend "azurerm" {
+    resource_group_name  = "rg-core-it"
+    storage_account_name = "tjscentralstore"
+    container_name       = "tfstate"
+    key                  = "oh-serverless/terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
@@ -46,7 +53,7 @@ resource "azurerm_app_service_plan" "asp" {
 resource "azurerm_function_app" "challenge2" {
   name                       = "challenge2"
   location                   = azurerm_resource_group.rg.location
-  resource_group_name        = azurerm_resource_group.registry.name
+  resource_group_name        = azurerm_resource_group.rg.name
   app_service_plan_id        = azurerm_app_service_plan.asp.id
   storage_account_name       = azurerm_storage_account.stafa.name
   storage_account_access_key = azurerm_storage_account.stafa.primary_access_key
