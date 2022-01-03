@@ -18,43 +18,43 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  tf_test:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest    
-    name: Test Terraform Code
-    defaults:
-      run:
-        working-directory: infra
-    env:
-      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+  # tf_test:
+  #   # The type of runner that the job will run on
+  #   runs-on: ubuntu-latest    
+  #   name: Test Terraform Code
+  #   defaults:
+  #     run:
+  #       working-directory: infra
+  #   env:
+  #     ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+  #     ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+  #     ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #     ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+  #   # Steps represent a sequence of tasks that will be executed as part of the job
+  #   steps:
+  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+  #     - uses: actions/checkout@v2
 
-      - name: Checkov GitHub Action
-        uses: bridgecrewio/checkov-action@v12.641.0
+  #     - name: Checkov GitHub Action
+  #       uses: bridgecrewio/checkov-action@v12.641.0
 
-      # Runs a single command using the runners shell
-      - name: terraform init
-        run: terraform init
+  #     # Runs a single command using the runners shell
+  #     - name: terraform init
+  #       run: terraform init
       
-      # Runs a single command using the runners shell
-      - name: terraform validate
-        run: terraform validate
+  #     # Runs a single command using the runners shell
+  #     - name: terraform validate
+  #       run: terraform validate
 
-      # Runs a single command using the runners shell
-      - name: terraform plan
-        run: terraform plan
+  #     # Runs a single command using the runners shell
+  #     - name: terraform plan
+  #       run: terraform plan
 
   # This workflow contains a single job called "build"
   terraform:
     name: 'Terraform - Deploy Infrastructure'
-    needs: tf_test
+    # needs: tf_test
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
