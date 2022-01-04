@@ -1,9 +1,9 @@
 resource "random_string" "suffix" {
-  length           = 4
-  lower = true
-  upper = false
+  length  = 4
+  lower   = true
+  upper   = false
   special = false
-  number = true
+  number  = true
 }
 
 locals {
@@ -50,8 +50,8 @@ resource "azurerm_function_app" "challenge3" {
 
 resource "azurerm_cosmosdb_account" "challenge3" {
   name                = "cosmos-${local.challenge_name}-${random_string.suffix.result}"
-  location                   = azurerm_resource_group.rgch3.location
-  resource_group_name        = azurerm_resource_group.rgch3.name
+  location            = azurerm_resource_group.rgch3.location
+  resource_group_name = azurerm_resource_group.rgch3.name
   offer_type          = "Standard"
 
   consistency_policy {
@@ -67,9 +67,18 @@ resource "azurerm_cosmosdb_account" "challenge3" {
 
 }
 
-resource "azurerm_cosmosdb_table" "challenge3" {
-  name                = "cosmos-table-${local.challenge_name}-${random_string.suffix.result}"
-  resource_group_name = azurerm_cosmosdb_account.challenge3.resource_group_name
-  account_name        = azurerm_cosmosdb_account.challenge3.name
+resource "azurerm_cosmosdb_sql_database" "challenge3" {
+  name                = "cosmos-sql"
+  location            = azurerm_resource_group.rgch3.location
+  resource_group_name = azurerm_resource_group.rgch3.name
   throughput          = 400
+}
+
+resource "azurerm_cosmosdb_sql_container" "challenge3" {
+  name                  = "Items"
+  location              = azurerm_resource_group.rgch3.location
+  resource_group_name   = azurerm_resource_group.rgch3.name
+  database_name         = azurerm_cosmosdb_sql_database.challenge3.name
+  partition_key_path    = "/definition/id"
+  partition_key_version = 1
 }

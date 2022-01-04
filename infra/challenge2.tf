@@ -1,5 +1,5 @@
 locals {
-  api_endpoint = "GET_challenge2"
+  api_endpoint  = "GET_challenge2"
   function_name = "challenge2"
 }
 
@@ -50,9 +50,9 @@ resource "azurerm_function_app" "challenge2" {
 }
 
 resource "azurerm_logic_app_workflow" "workflow1" {
-  location                   = azurerm_resource_group.rg.location
-  resource_group_name        = azurerm_resource_group.rg.name
-  name = "la-oh-2"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  name                = "la-oh-2"
 }
 
 resource "azurerm_template_deployment" "workflow1" {
@@ -61,11 +61,11 @@ resource "azurerm_template_deployment" "workflow1" {
   resource_group_name = azurerm_resource_group.rg.name
   parameters = merge({
     "workflows_functions_uri" = "https://${local.function_name}.azurewebsites.net/api/${local.api_endpoint}",
-    "location"     = azurerm_resource_group.rg.location
+    "location"                = azurerm_resource_group.rg.location
   }, var.workflow_parameters)
 
   template_body = data.template_file.workflow.template
 
-  name = "terraform-logic-app-deploy"
+  name            = "terraform-logic-app-deploy"
   deployment_mode = "Incremental"
 }
