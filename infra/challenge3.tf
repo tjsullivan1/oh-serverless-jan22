@@ -69,14 +69,14 @@ resource "azurerm_cosmosdb_account" "challenge3" {
 
 resource "azurerm_cosmosdb_sql_database" "challenge3" {
   name                = "cosmos-sql"
-  location            = azurerm_resource_group.rgch3.location
+  account_name        = azurerm_cosmosdb_account.challenge3.name
   resource_group_name = azurerm_resource_group.rgch3.name
   throughput          = 400
 }
 
 resource "azurerm_cosmosdb_sql_container" "challenge3" {
   name                  = "Items"
-  location              = azurerm_resource_group.rgch3.location
+  account_name          = azurerm_cosmosdb_account.challenge3.name
   resource_group_name   = azurerm_resource_group.rgch3.name
   database_name         = azurerm_cosmosdb_sql_database.challenge3.name
   partition_key_path    = "/definition/id"
