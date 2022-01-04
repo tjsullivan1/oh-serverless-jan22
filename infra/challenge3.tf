@@ -3,7 +3,7 @@ resource "random_string" "suffix" {
 }
 
 locals {
-  challenge_name = "challenge3" + resource.random_string.suffix
+  challenge_name = "challenge3"
 }
 
 
@@ -34,7 +34,7 @@ resource "azurerm_app_service_plan" "aspch3" {
 }
 
 resource "azurerm_function_app" "challenge3" {
-  name                       = local.challenge_name
+  name                       = "${local.challenge_name}-${random_string.suffix}"
   location                   = azurerm_resource_group.rgch3.location
   resource_group_name        = azurerm_resource_group.rgch3.name
   app_service_plan_id        = azurerm_app_service_plan.aspch3.id
