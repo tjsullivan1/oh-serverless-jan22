@@ -8,6 +8,7 @@ resource "random_string" "suffix" {
 
 locals {
   challenge_name = "challenge3"
+  kv_id = "/subscriptions/8b63fe10-d76a-4f8f-81ce-7a5a8b911779/resourceGroups/rg-core-it/providers/Microsoft.KeyVault/vaults/tjs-kv-premium"
 }
 
 
@@ -81,4 +82,12 @@ resource "azurerm_cosmosdb_sql_container" "challenge3" {
   database_name         = azurerm_cosmosdb_sql_database.challenge3.name
   partition_key_path    = "/definition/id"
   partition_key_version = 1
+}
+
+# Key Vault ref: azurerm_cosmosdb_account.challenge3.connection_strings[0]
+
+resource "azurerm_key_vault_secret" "cosmos_conn_string" {
+  name         = "AZURE_COSMOSDB_CONNECTION_STRING"
+  value        = azurerm_cosmosdb_account.challenge3.connection_strings[0]
+  key_vault_id = local.kv_id
 }
