@@ -60,6 +60,11 @@ resource "azurerm_cosmosdb_account" "challenge3" {
     max_staleness_prefix    = 100000
   }
 
+  geo_location {
+    location          = azurerm_resource_group.rg.location
+    failover_priority = 0
+  }
+
 }
 
 resource "azurerm_cosmosdb_table" "challenge3" {
