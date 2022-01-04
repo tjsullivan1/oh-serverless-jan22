@@ -19,3 +19,8 @@ provider "azurerm" {
   skip_provider_registration = false
   features {}
 }
+
+
+data "azurerm_subscription" "primary" {}
+
+data "azurerm_client_config" "current" {}

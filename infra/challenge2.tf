@@ -3,10 +3,6 @@ locals {
   function_name = "challenge2"
 }
 
-data "azurerm_subscription" "primary" {}
-
-data "azurerm_client_config" "current" {}
-
 data "template_file" "workflow" {
   template = file("./logicapp.json")
 }

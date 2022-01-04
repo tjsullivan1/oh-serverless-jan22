@@ -1,11 +1,6 @@
 locals {
   challenge_name = "challenge3"
 }
-
-data "azurerm_subscription" "primary" {}
-
-data "azurerm_client_config" "current" {}
-
 resource "azurerm_resource_group" "rgch3" {
   name     = "rg-tjs-oh-${local.challenge_name}"
   location = "eastus"
