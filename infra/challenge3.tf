@@ -1,6 +1,12 @@
-locals {
-  challenge_name = "challenge3"
+resource "random_string" "suffix" {
+  length           = 4
 }
+
+locals {
+  challenge_name = "challenge3${random_string.suffix}"
+}
+
+
 resource "azurerm_resource_group" "rgch3" {
   name     = "rg-tjs-oh-${local.challenge_name}"
   location = "eastus"
