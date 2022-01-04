@@ -3,7 +3,7 @@ resource "random_string" "suffix" {
 }
 
 locals {
-  challenge_name = "challenge3${random_string.suffix}"
+  challenge_name = "challenge3" + resource.random_string.suffix
 }
 
 
