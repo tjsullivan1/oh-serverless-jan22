@@ -47,3 +47,24 @@ resource "azurerm_function_app" "challenge3" {
   os_type                    = "linux"
   version                    = "~3"
 }
+
+resource "azurerm_cosmosdb_account" "challenge3" {
+  name                = "cosmos-${local.challenge_name}-${random_string.suffix.result}"
+  location                   = azurerm_resource_group.rgch3.location
+  resource_group_name        = azurerm_resource_group.rgch3.name
+  offer_type          = "Standard"
+
+  consistency_policy {
+    consistency_level       = "BoundedStaleness"
+    max_interval_in_seconds = 300
+    max_staleness_prefix    = 100000
+  }
+
+}
+
+resource "azurerm_cosmosdb_table" "challenge3" {
+  name                = "cosmos-table-${local.challenge_name}-${random_string.suffix.result}"
+  resource_group_name = azurerm_cosmosdb_account.challenge3.resource_group_name
+  account_name        = azurerm_cosmosdb_account.challenge3.name
+  throughput          = 400
+}
