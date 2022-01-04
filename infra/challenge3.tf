@@ -32,7 +32,7 @@ resource "azurerm_app_service_plan" "aspch3" {
   }
 }
 
-resource "azurerm_function_app" "challenge2" {
+resource "azurerm_function_app" "challenge3" {
   name                       = local.function_name
   location                   = azurerm_resource_group.rgch3.location
   resource_group_name        = azurerm_resource_group.rgch3.name
