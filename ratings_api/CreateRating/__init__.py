@@ -1,14 +1,21 @@
 import logging
 import requests
+import uuid
+import os
+import json
+from datetime import datetime
+import azure.cosmos.documents as documents
+import azure.cosmos.cosmos_client as cosmos_client
+import azure.cosmos.exceptions as exceptions
+from azure.cosmos.partition_key import PartitionKey
 
 import azure.functions as func
 
 '''
 Requirements
-Validate both userId and productId by calling the existing API endpoints. You can find a user id to test with from the sample payload above
 Add a property called id with a GUID value
 Add a property called timestamp with the current UTC date time
-Validate that the rating field is an integer from 0 to 5
+
 Use a data service to store the ratings information to the backend
 Return the entire review JSON payload with the newly created id and timestamp
 '''
@@ -23,22 +30,8 @@ Sample data set
   "userNotes": "I love the subtle notes of orange in this ice cream!"
 }
 '''
-def validate_http_success(resp_status_code: int) -> bool:
-    if 200 <= resp_status_code <= 226:
-        logging.info(f'Request was sucessful, status was {resp_status_code} - this indicates the object existed')
-        return True
-    elif 300 <= resp_status_code <= 308:
-        logging.info(f'Request was redirected, status was {resp_status_code}')
-        return False
-    elif 400 <= resp_status_code <= 499:
-        logging.error(f'Request was an client error, status was {resp_status_code}')
-    elif 500 <= resp_status_code <= 599:
-        logging.error(f'Request was an server error, status was {resp_status_code}')
 
-    return False
-
-
-def validate_input(value, input_type: str):
+def validate_input(value, input_type: str) -> bool:
     if input_type.lower() == 'user':
         validation_url = f'https://serverlessohapi.azurewebsites.net/api/GetUser?userId={value}'
         logging.info(f'Validating user {value}')
@@ -46,20 +39,33 @@ def validate_input(value, input_type: str):
         validation_url = f'https://serverlessohapi.azurewebsites.net/api/GetProduct?productId={value}'
         logging.info(f'Validating product {value}')
     elif input_type == 'rating':
+        if type(value) != int:
+            logging.info(f'Invalid rating {value}, needs to be an integer')
+            return False
+        if 0 < value < 6:
+            return True
         return False
     else:
         logging.error('Not a known type for validation. Failing function')
         return False
 
-    validation_resp = requests.get(validation_url)
-    if validate_http_success(validation_resp.status_code):
-        logging.info(f'Validated value {value}')
-        return 'Valid'
-    elif validation_resp.status_code == 400:
-        logging.info(f'Value is invalid, {value}')
-        return 'Not Valid'
+    response = requests.get(validation_url)
+
+    if response.text.startswith('{"'):
+        return True
 
     return False
+
+
+def generate_payload(userId, productId, rating, timestamp, id, location = None,  notes = None):
+    json_payload = {
+        'userId': userId,
+        'productId': productId,
+        'rating': rating,
+        'timestamp': timestamp,
+        'id': id,
+    }
+    return json_payload
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -79,17 +85,40 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     productId = req_body.get('productId')
     rating = req_body.get('rating')
     
-    if userId and productId and rating:
-        
-        if validate_input(userId, 'User') == 'Valid':
-            logging.info(f'User ID {userId} was valid')
-            if validate_input(productId, 'product') == 'Valid':
-                logging.info(f'Product ID {productId} was valid')
-                return func.HttpResponse(f"The product name for your product id {userId} is Starfruit Explosion")
-        else:
-            return func.HttpResponse(f"The user id, {userId}, inputted was invalid", status_code=400)
-    else:
+    # Validate
+    if not validate_input(userId, "user"):
         return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a product_id in the query string or in the request body for a personalized response.",
-             status_code=200
+             "userId invalid",
+             status_code=404
         )
+
+    if not validate_input(productId, "product"):
+        return func.HttpResponse(
+             "productId invalid",
+             status_code=404
+        )
+
+    if not validate_input(rating, "rating"):
+         return func.HttpResponse(
+             "rating invalid",
+             status_code=400
+        )
+
+    id = str(uuid.uuid4())
+    timestamp = str(datetime.utcnow())
+    my_json = generate_payload(userId, productId, rating, timestamp, id)
+    request_json = json.dumps(my_json)
+
+    DATABASE_ID = os.environ.get("AZURE_COSMOSDB_DATABASE_NAME")
+    CONTAINER = os.environ.get("AZURE_COSMOSDB_COLLECTION")
+    CONNECTION_STRING = os.environ.get("AZURE_COSMOSDB_CONNECTION_STRING")
+
+    client = cosmos_client.CosmosClient.from_connection_string(CONNECTION_STRING)
+    db = client.get_database_client(DATABASE_ID)
+    container = db.get_container_client(CONTAINER)
+    container.create_item(body=my_json)
+
+    return func.HttpResponse(
+            f"This HTTP triggered function executed successfully. Future development needed. Payload is {request_json}",
+            status_code=200
+    )
