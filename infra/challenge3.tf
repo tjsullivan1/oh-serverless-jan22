@@ -32,7 +32,7 @@ resource "azurerm_app_service_plan" "aspch3" {
   name                = "asp-tjs-${local.challenge_name}"
   location            = azurerm_resource_group.rgch3.location
   resource_group_name = azurerm_resource_group.rgch3.name
-  kind                = "functionapp"
+  kind                = "linux"
   reserved            = true
 
   sku {
