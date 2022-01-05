@@ -7,7 +7,7 @@ resource "random_string" "suffix" {
 }
 
 locals {
-  challenge_name = "challenge3"
+  challenge_name = "challenge32"
   kv_id = "/subscriptions/8b63fe10-d76a-4f8f-81ce-7a5a8b911779/resourceGroups/rg-core-it/providers/Microsoft.KeyVault/vaults/tjs-kv-premium"
 }
 
