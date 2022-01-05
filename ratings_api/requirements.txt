@@ -12,3 +12,4 @@ idna==2.8
 requests
 six==1.13.0
 urllib3
+opencensus-ext-azure
