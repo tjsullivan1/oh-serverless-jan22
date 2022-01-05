@@ -65,6 +65,8 @@ resource "azurerm_function_app" "challenge3" {
     AZURE_COSMOSDB_COLLECTION = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_sql_collection.name})"
     APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.challenge3.instrumentation_key
     APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.challenge3.connection_string
+    SCM_DO_BUILD_DURING_DEPLOYMENT = "true"
+    ENABLE_ORYX_BUILD = "true"
   }
 }
 
