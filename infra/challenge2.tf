@@ -1,6 +1,6 @@
 locals {
   api_endpoint  = "GET_challenge2"
-  function_name = "challenge2"
+  function_name = "challenge22"
 }
 
 data "template_file" "workflow" {
