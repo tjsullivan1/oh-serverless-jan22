@@ -106,19 +106,19 @@ resource "azurerm_cosmosdb_sql_container" "challenge3" {
 }
 
 resource "azurerm_key_vault_secret" "cosmos_conn_string" {
-  name         = "AZURE-COSMOSDB-CONNECTION-STRING"
+  name         = "AZURE-COSMOSDB-CONNECTION-STRING${local.challenge_name}"
   value        = azurerm_cosmosdb_account.challenge3.connection_strings[0]
   key_vault_id = local.kv_id
 }
 
 resource "azurerm_key_vault_secret" "cosmos_sql_db_name" {
-  name         = "AZURE-COSMOSDB-DATABASE-NAME"
+  name         = "AZURE-COSMOSDB-DATABASE-NAME${local.challenge_name}"
   value        = azurerm_cosmosdb_sql_database.challenge3.name
   key_vault_id = local.kv_id
 }
 
 resource "azurerm_key_vault_secret" "cosmos_sql_collection" {
-  name         = "AZURE-COSMOSDB-COLLECTION"
+  name         = "AZURE-COSMOSDB-COLLECTION${local.challenge_name}"
   value        = azurerm_cosmosdb_sql_container.challenge3.name
   key_vault_id = local.kv_id
 }
