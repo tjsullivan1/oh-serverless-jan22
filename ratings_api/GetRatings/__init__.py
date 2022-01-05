@@ -2,17 +2,16 @@ import logging
 
 import os
 import azure.functions as func
-import azure.cosmos.documents as documents
-import azure.cosmos.cosmos_client as cosmos_client
-import azure.cosmos.exceptions as exceptions
-from azure.cosmos.partition_key import PartitionKey
+
+from azure.cosmos import CosmosClient
+
 import json
 
 def create_cosmos_container_useable(DATABASE_ID = os.environ.get("AZURE_COSMOSDB_DATABASE_NAME"), CONTAINER = os.environ.get("AZURE_COSMOSDB_COLLECTION"), CONNECTION_STRING = os.environ.get("AZURE_COSMOSDB_CONNECTION_STRING")):
     '''
     Trying to simplify my main function by abstracting cosmos pieces
     '''
-    client = cosmos_client.CosmosClient.from_connection_string(CONNECTION_STRING)
+    client = CosmosClient.from_connection_string(CONNECTION_STRING)
     db = client.get_database_client(DATABASE_ID)
     container = db.get_container_client(CONTAINER)
 
