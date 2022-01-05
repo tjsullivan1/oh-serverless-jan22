@@ -36,8 +36,8 @@ resource "azurerm_app_service_plan" "aspch3" {
   reserved            = true
 
   sku {
-    tier = "Dynamic"
-    size = "Y1"
+    tier = "Standard"
+    size = "S1"
   }
 }
 
