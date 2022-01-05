@@ -119,7 +119,7 @@ resource "azurerm_key_vault_access_policy" "myfunctionchallenge3" {
   key_vault_id = local.kv_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
 
-  object_id = "${azurerm_function_app.challenge3.identity.0.principal_id}"
+  object_id = azurerm_function_app.challenge3.identity.0.principal_id
 
   secret_permissions = [
     "get",
