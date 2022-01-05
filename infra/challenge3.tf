@@ -49,7 +49,11 @@ resource "azurerm_function_app" "challenge3" {
   storage_account_name       = azurerm_storage_account.stafach3.name
   storage_account_access_key = azurerm_storage_account.stafach3.primary_access_key
   os_type                    = "linux"
-  version                    = "~3"
+  version                    = "~4"
+  
+  site_config {
+    linux_fx_version = "python|3.9"
+  }
 
   identity {
     type = "SystemAssigned"
