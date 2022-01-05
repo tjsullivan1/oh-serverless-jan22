@@ -68,6 +68,17 @@ def generate_payload(userId, productId, rating, timestamp, id, location = None, 
     return json_payload
 
 
+def create_cosmos_container_useable(DATABASE_ID = os.environ.get("AZURE_COSMOSDB_DATABASE_NAME"), CONTAINER = os.environ.get("AZURE_COSMOSDB_COLLECTION"), CONNECTION_STRING = os.environ.get("AZURE_COSMOSDB_CONNECTION_STRING")):
+    '''
+    Trying to simplify my main function by abstracting cosmos pieces
+    '''
+    client = cosmos_client.CosmosClient.from_connection_string(CONNECTION_STRING)
+    db = client.get_database_client(DATABASE_ID)
+    container = db.get_container_client(CONTAINER)
+
+    return container
+
+
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
@@ -113,13 +124,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     my_json = generate_payload(userId, productId, rating, timestamp, id)
     request_json = json.dumps(my_json)
 
-    DATABASE_ID = os.environ.get("AZURE_COSMOSDB_DATABASE_NAME")
-    CONTAINER = os.environ.get("AZURE_COSMOSDB_COLLECTION")
-    CONNECTION_STRING = os.environ.get("AZURE_COSMOSDB_CONNECTION_STRING")
-
-    client = cosmos_client.CosmosClient.from_connection_string(CONNECTION_STRING)
-    db = client.get_database_client(DATABASE_ID)
-    container = db.get_container_client(CONTAINER)
+    container = create_cosmos_container_useable()
     container.create_item(body=my_json)
 
     return func.HttpResponse(
