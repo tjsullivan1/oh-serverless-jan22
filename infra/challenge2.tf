@@ -13,12 +13,12 @@ variable "workflow_parameters" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-tjs-oh-challenge2"
+  name     = "rg-tjs-oh-${local.function_name}"
   location = "eastus"
 }
 
 resource "azurerm_storage_account" "stafa" {
-  name                     = "stafatjs"
+  name                     = "stafatjs${local.function_name}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
@@ -26,7 +26,7 @@ resource "azurerm_storage_account" "stafa" {
 }
 
 resource "azurerm_app_service_plan" "asp" {
-  name                = "asp-tjs-challenge2"
+  name                = "asp-tjs-${local.function_name}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   kind                = "functionapp"
@@ -52,7 +52,7 @@ resource "azurerm_function_app" "challenge2" {
 resource "azurerm_logic_app_workflow" "workflow1" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  name                = "la-oh-2"
+  name                = "la-oh-${local.function_name}"
 }
 
 resource "azurerm_template_deployment" "workflow1" {
