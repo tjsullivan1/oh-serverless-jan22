@@ -63,8 +63,8 @@ resource "azurerm_function_app" "challenge3" {
     AZURE_COSMOSDB_CONNECTION_STRING = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_conn_string.name})"
     AZURE_COSMOSDB_DATABASE_NAME = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_sql_db_name.name})"
     AZURE_COSMOSDB_COLLECTION = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_sql_collection.name})"
-    APPINSIGHTS_INSTRUMENTATIONKEY = "@Microsoft.KeyVault(SecretUri=https://tjs-kv-premium.vault.azure.net/secrets/app-insights-instrument)"
-    APPLICATIONINSIGHTS_CONNECTION_STRING = "@Microsoft.KeyVault(SecretUri=https://tjs-kv-premium.vault.azure.net/secrets/app-insights-cxn)"    
+    APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.challenge3.instrumentation_key
+    APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.challenge3.connection_string
   }
 }
 
@@ -130,4 +130,11 @@ resource "azurerm_key_vault_access_policy" "myfunctionchallenge3" {
   secret_permissions = [
     "get",
   ]
+}
+
+resource "azurerm_application_insights" "challenge3" {
+  name                = "aai-${local.challenge_name}-${random_string.suffix.result}"
+  location            = azurerm_resource_group.rgch3.location
+  resource_group_name = azurerm_resource_group.rgch3.name
+  application_type    = "web"
 }
