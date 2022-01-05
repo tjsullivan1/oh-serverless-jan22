@@ -63,6 +63,8 @@ resource "azurerm_function_app" "challenge3" {
     AZURE_COSMOSDB_CONNECTION_STRING = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_conn_string.name})"
     AZURE_COSMOSDB_DATABASE_NAME = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_sql_db_name.name})"
     AZURE_COSMOSDB_COLLECTION = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_sql_collection.name})"
+    APPINSIGHTS_INSTRUMENTATIONKEY = "@Microsoft.KeyVault(SecretUri='https://tjs-kv-premium.vault.azure.net/secrets/app-insights-instrument/cf4f03c988624e1bbbbe6546f51583e4')"
+    APPLICATIONINSIGHTS_CONNECTION_STRING = "@Microsoft.KeyVault(SecretUri='https://tjs-kv-premium.vault.azure.net/secrets/app-insights-cxn/e0d03d82120142919871036e026de1c3')"    
   }
 }
 

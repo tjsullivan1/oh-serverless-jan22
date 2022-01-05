@@ -4,8 +4,8 @@
 
 azure-functions
 requests
-azure-core
-azure-cosmos
+# azure-core
+# azure-cosmos
 certifi==2019.11.28
 chardet==3.0.4
 idna==2.8
