@@ -84,22 +84,20 @@ resource "azurerm_cosmosdb_sql_container" "challenge3" {
   partition_key_version = 1
 }
 
-# Key Vault ref: azurerm_cosmosdb_account.challenge3.connection_strings[0]
-
 resource "azurerm_key_vault_secret" "cosmos_conn_string" {
-  name         = "AZURE_COSMOSDB_CONNECTION_STRING"
+  name         = "AZURE-COSMOSDB-CONNECTION-STRING"
   value        = azurerm_cosmosdb_account.challenge3.connection_strings[0]
   key_vault_id = local.kv_id
 }
 
 resource "azurerm_key_vault_secret" "cosmos_sql_db_name" {
-  name         = "AZURE_COSMOSDB_DATABASE_NAME"
+  name         = "AZURE-COSMOSDB-DATABASE-NAME"
   value        = azurerm_cosmosdb_sql_database.challenge3.name
   key_vault_id = local.kv_id
 }
 
 resource "azurerm_key_vault_secret" "cosmos_sql_collection" {
-  name         = "AZURE_COSMOSDB_COLLECTION"
+  name         = "AZURE-COSMOSDB-COLLECTION"
   value        = azurerm_cosmosdb_sql_container.challenge3.name
   key_vault_id = local.kv_id
 }
