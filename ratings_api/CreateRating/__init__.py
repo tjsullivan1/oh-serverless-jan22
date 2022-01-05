@@ -77,8 +77,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         req_body = req.get_json()
     except ValueError:
         return func.HttpResponse(
-             "Expected a POST request.",
-             status_code=400
+             '{"response": "Expected a POST request."}',
+             status_code=400,
+             mimetype='application/json'
         )
 
     userId = req_body.get('userId')
@@ -88,20 +89,23 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # Validate
     if not validate_input(userId, "user"):
         return func.HttpResponse(
-             "userId invalid",
-             status_code=404
+             '{"response": "userId invalid"}',
+             status_code=404,
+             mimetype='application/json'
         )
 
     if not validate_input(productId, "product"):
         return func.HttpResponse(
-             "productId invalid",
-             status_code=404
+             '{"response": "productId invalid"}',
+             status_code=404,
+             mimetype='application/json'
         )
 
     if not validate_input(rating, "rating"):
          return func.HttpResponse(
-             "rating invalid",
-             status_code=400
+             '{"response": "rating invalid"}',
+             status_code=400,
+             mimetype='application/json'
         )
 
     id = str(uuid.uuid4())
@@ -119,6 +123,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     container.create_item(body=my_json)
 
     return func.HttpResponse(
-            f"This HTTP triggered function executed successfully. Future development needed. Payload is {request_json}",
-            status_code=200
+            body=request_json,
+            status_code=200,
+            mimetype='application/json'
     )
