@@ -91,3 +91,15 @@ resource "azurerm_key_vault_secret" "cosmos_conn_string" {
   value        = azurerm_cosmosdb_account.challenge3.connection_strings[0]
   key_vault_id = local.kv_id
 }
+
+resource "azurerm_key_vault_secret" "cosmos_sql_db_name" {
+  name         = "AZURE_COSMOSDB_DATABASE_NAME"
+  value        = azurerm_cosmosdb_sql_database.challenge3.name
+  key_vault_id = local.kv_id
+}
+
+resource "azurerm_key_vault_secret" "cosmos_sql_collection" {
+  name         = "AZURE_COSMOSDB_COLLECTION"
+  value        = azurerm_cosmosdb_sql_container.challenge3.name
+  key_vault_id = local.kv_id
+}
