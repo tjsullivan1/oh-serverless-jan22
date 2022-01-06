@@ -45,9 +45,10 @@ resource "azurerm_api_management_product" "mobile" {
   api_management_name   = azurerm_api_management.challenge4.name
   resource_group_name   = azurerm_resource_group.rg4.name
   display_name          = "Mobile Applications"
-  subscription_required = false
+  subscription_required = true
   approval_required     = false
   published             = true
+  description           = "The Mobile Application requires access to all of the APIs. Each of them is required for different areas of the application’s UX. "
 }
 
 resource "azurerm_api_management_product" "internal" {
@@ -55,9 +56,10 @@ resource "azurerm_api_management_product" "internal" {
   api_management_name   = azurerm_api_management.challenge4.name
   resource_group_name   = azurerm_resource_group.rg4.name
   display_name          = "Internal Users"
-  subscription_required = false
+  subscription_required = true
   approval_required     = false
   published             = true
+  description           = "The Internal business users use the APIs for reporting purposes. They need access to the product and rating information but shouldn’t be using the user operation or be able to create ratings."
 }
 
 resource "azurerm_api_management_product" "external" {
@@ -65,9 +67,10 @@ resource "azurerm_api_management_product" "external" {
   api_management_name   = azurerm_api_management.challenge4.name
   resource_group_name   = azurerm_resource_group.rg4.name
   display_name          = "External Users"
-  subscription_required = false
+  subscription_required = true
   approval_required     = false
   published             = true
+  description           = "The External Partners use case is to be able to see products that BYFOC has to offer, so should only have the product operations exposed to them."
 }
 
 resource "azurerm_api_management_api" "GetProduct" {
