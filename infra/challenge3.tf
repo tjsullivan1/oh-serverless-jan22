@@ -134,9 +134,15 @@ resource "azurerm_key_vault_access_policy" "myfunctionchallenge3" {
   ]
 }
 
+data "azurerm_log_analytics_workspace" "la-tjs" {
+  name                = "la-tjs-01"
+  resource_group_name = "rg-logs"
+}
+
 resource "azurerm_application_insights" "challenge3" {
   name                = "aai-${local.challenge_name}-${random_string.suffix.result}"
   location            = azurerm_resource_group.rgch3.location
   resource_group_name = azurerm_resource_group.rgch3.name
+  workspace_id        = data.azurerm_log_analytics_workspace.la-tjs.id
   application_type    = "web"
 }
