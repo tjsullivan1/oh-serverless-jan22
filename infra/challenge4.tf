@@ -43,7 +43,7 @@ resource "azurerm_api_management" "challenge4" {
 resource "azurerm_api_management_product" "mobile" {
   product_id            = "mobile-product"
   api_management_name   = azurerm_api_management.challenge4.name
-  resource_group_name   = azurerm_resource_group.challenge4.name
+  resource_group_name   = azurerm_resource_group.rg4.name
   display_name          = "Mobile Applications"
   subscription_required = true
   approval_required     = true
@@ -53,7 +53,7 @@ resource "azurerm_api_management_product" "mobile" {
 resource "azurerm_api_management_product" "internal" {
   product_id            = "internal-product"
   api_management_name   = azurerm_api_management.challenge4.name
-  resource_group_name   = azurerm_resource_group.challenge4.name
+  resource_group_name   = azurerm_resource_group.rg4.name
   display_name          = "Internal Users"
   subscription_required = true
   approval_required     = true
@@ -63,7 +63,7 @@ resource "azurerm_api_management_product" "internal" {
 resource "azurerm_api_management_product" "external" {
   product_id            = "external-product"
   api_management_name   = azurerm_api_management.challenge4.name
-  resource_group_name   = azurerm_resource_group.challenge4.name
+  resource_group_name   = azurerm_resource_group.rg4.name
   display_name          = "External Users"
   subscription_required = true
   approval_required     = true
@@ -73,19 +73,19 @@ resource "azurerm_api_management_product" "external" {
 resource "azurerm_api_management_api" "GetProduct" {
   name                = "GetProduct"
   api_management_name   = azurerm_api_management.challenge4.name
-  resource_group_name   = azurerm_resource_group.challenge4.name
+  resource_group_name   = azurerm_resource_group.rg4.name
   revision            = "1"
-  display_name        = "Example API"
-  path                = "example"
+  display_name        = "GetProduct"
+  path                = "GetProduct"
   protocols           = ["https"]
 }
 
 resource "azurerm_api_management_api" "GetUser" {
   name                = "GetUser"
   api_management_name   = azurerm_api_management.challenge4.name
-  resource_group_name   = azurerm_resource_group.challenge4.name
+  resource_group_name   = azurerm_resource_group.rg4.name
   revision            = "1"
-  display_name        = "Example API"
-  path                = "example"
+  display_name        = "GetUser"
+  path                = "GetUser"
   protocols           = ["https"]
 }
