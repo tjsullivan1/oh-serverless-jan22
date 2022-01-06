@@ -191,7 +191,7 @@ resource "azurerm_api_management_api_operation" "getRating" {
   resource_group_name = azurerm_resource_group.rg4.name
   display_name        = "Get Rating"
   method              = "GET"
-  url_template        = "/GetRating?ratingId={id}"
+  url_template        = "/GetRating"
   description         = "This can only be done by the logged in user."
 
   response {
