@@ -73,36 +73,37 @@ resource "azurerm_api_management_product" "external" {
   description           = "The External Partners use case is to be able to see products that BYFOC has to offer, so should only have the product operations exposed to them."
 }
 
-resource "azurerm_api_management_api" "GetProduct" {
-  name                = "GetProduct"
+resource "azurerm_api_management_api" "products" {
+  name                = "productsAPI"
   api_management_name = azurerm_api_management.challenge4.name
   resource_group_name = azurerm_resource_group.rg4.name
   revision            = "1"
-  display_name        = "GetProduct"
-  path                = "GetProduct"
+  display_name        = "Products API"
+  path                = "products"
   protocols           = ["https"]
 }
 
-resource "azurerm_api_management_api" "GetProducts" {
-  name                = "GetProducts"
+
+resource "azurerm_api_management_api" "users" {
+  name                = "usersAPI"
   api_management_name = azurerm_api_management.challenge4.name
   resource_group_name = azurerm_resource_group.rg4.name
   revision            = "1"
-  display_name        = "GetProducts"
-  path                = "GetProducts"
+  display_name        = "Users API"
+  path                = "users"
   protocols           = ["https"]
 }
 
-resource "azurerm_api_management_api" "GetUser" {
-  name                = "GetUser"
+
+resource "azurerm_api_management_api" "ratings" {
+  name                = "ratingsAPI"
   api_management_name = azurerm_api_management.challenge4.name
   resource_group_name = azurerm_resource_group.rg4.name
   revision            = "1"
-  display_name        = "GetUser"
-  path                = "GetUser"
+  display_name        = "Ratings API"
+  path                = "ratings"
   protocols           = ["https"]
 }
-
 resource "azurerm_api_management_api" "CreateRating" {
   name                = "CreateRating"
   api_management_name = azurerm_api_management.challenge4.name
@@ -113,42 +114,22 @@ resource "azurerm_api_management_api" "CreateRating" {
   protocols           = ["https"]
 }
 
-resource "azurerm_api_management_api" "GetRating" {
-  name                = "GetRating"
-  api_management_name = azurerm_api_management.challenge4.name
-  resource_group_name = azurerm_resource_group.rg4.name
-  revision            = "1"
-  display_name        = "GetRating"
-  path                = "GetRating"
-  protocols           = ["https"]
-}
-
-resource "azurerm_api_management_api" "GetRatings" {
-  name                = "GetRatings"
-  api_management_name = azurerm_api_management.challenge4.name
-  resource_group_name = azurerm_resource_group.rg4.name
-  revision            = "1"
-  display_name        = "GetRatings"
-  path                = "GetRatings"
-  protocols           = ["https"]
-}
-
-resource "azurerm_api_management_product_api" "mobileGetUser" {
-  api_name            = azurerm_api_management_api.GetUser.name
+resource "azurerm_api_management_product_api" "mobileUsers" {
+  api_name            = azurerm_api_management_api.users.name
   product_id          = azurerm_api_management_product.mobile.product_id
   api_management_name = azurerm_api_management.challenge4.name
   resource_group_name = azurerm_resource_group.rg4.name
 }
 
-resource "azurerm_api_management_product_api" "mobileGetProduct" {
-  api_name            = azurerm_api_management_api.GetProduct.name
+resource "azurerm_api_management_product_api" "mobileProducts" {
+  api_name            = azurerm_api_management_api.products.name
   product_id          = azurerm_api_management_product.mobile.product_id
   api_management_name = azurerm_api_management.challenge4.name
   resource_group_name = azurerm_resource_group.rg4.name
 }
 
-resource "azurerm_api_management_product_api" "mobileGetProducts" {
-  api_name            = azurerm_api_management_api.GetProducts.name
+resource "azurerm_api_management_product_api" "mobileRatings" {
+  api_name            = azurerm_api_management_api.ratings.name
   product_id          = azurerm_api_management_product.mobile.product_id
   api_management_name = azurerm_api_management.challenge4.name
   resource_group_name = azurerm_resource_group.rg4.name
@@ -161,57 +142,24 @@ resource "azurerm_api_management_product_api" "mobileCreateRating" {
   resource_group_name = azurerm_resource_group.rg4.name
 }
 
-resource "azurerm_api_management_product_api" "mobileGetRating" {
-  api_name            = azurerm_api_management_api.GetRating.name
-  product_id          = azurerm_api_management_product.mobile.product_id
-  api_management_name = azurerm_api_management.challenge4.name
-  resource_group_name = azurerm_resource_group.rg4.name
-}
 
-resource "azurerm_api_management_product_api" "mobileGetRatings" {
-  api_name            = azurerm_api_management_api.GetRatings.name
-  product_id          = azurerm_api_management_product.mobile.product_id
-  api_management_name = azurerm_api_management.challenge4.name
-  resource_group_name = azurerm_resource_group.rg4.name
-}
-
-resource "azurerm_api_management_product_api" "internalGetProduct" {
-  api_name            = azurerm_api_management_api.GetProduct.name
+resource "azurerm_api_management_product_api" "internalProducts" {
+  api_name            = azurerm_api_management_api.products.name
   product_id          = azurerm_api_management_product.internal.product_id
   api_management_name = azurerm_api_management.challenge4.name
   resource_group_name = azurerm_resource_group.rg4.name
 }
 
-resource "azurerm_api_management_product_api" "internalGetProducts" {
-  api_name            = azurerm_api_management_api.GetProducts.name
+resource "azurerm_api_management_product_api" "internalRatings" {
+  api_name            = azurerm_api_management_api.ratings.name
   product_id          = azurerm_api_management_product.internal.product_id
   api_management_name = azurerm_api_management.challenge4.name
   resource_group_name = azurerm_resource_group.rg4.name
 }
 
-resource "azurerm_api_management_product_api" "internalGetRating" {
-  api_name            = azurerm_api_management_api.GetRating.name
-  product_id          = azurerm_api_management_product.internal.product_id
-  api_management_name = azurerm_api_management.challenge4.name
-  resource_group_name = azurerm_resource_group.rg4.name
-}
 
-resource "azurerm_api_management_product_api" "internalGetRatings" {
-  api_name            = azurerm_api_management_api.GetRatings.name
-  product_id          = azurerm_api_management_product.internal.product_id
-  api_management_name = azurerm_api_management.challenge4.name
-  resource_group_name = azurerm_resource_group.rg4.name
-}
-
-resource "azurerm_api_management_product_api" "externalGetProduct" {
-  api_name            = azurerm_api_management_api.GetProduct.name
-  product_id          = azurerm_api_management_product.external.product_id
-  api_management_name = azurerm_api_management.challenge4.name
-  resource_group_name = azurerm_resource_group.rg4.name
-}
-
-resource "azurerm_api_management_product_api" "externalGetProducts" {
-  api_name            = azurerm_api_management_api.GetProducts.name
+resource "azurerm_api_management_product_api" "externalProducts" {
+  api_name            = azurerm_api_management_api.products.name
   product_id          = azurerm_api_management_product.external.product_id
   api_management_name = azurerm_api_management.challenge4.name
   resource_group_name = azurerm_resource_group.rg4.name
