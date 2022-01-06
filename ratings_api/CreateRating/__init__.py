@@ -32,9 +32,7 @@ Sample data set
 
 def validate_input(value, input_type: str) -> bool:
     if input_type.lower() == "user":
-        validation_url = (
-            f"https://serverlessohapi.azurewebsites.net/api/GetUser?userId={value}"
-        )
+        validation_url = f"https://serverlessohapi.azurewebsites.net/api/GetUser?userId={value}"
         logging.info(f"Validating user {value}")
     elif input_type == "product":
         validation_url = f"https://serverlessohapi.azurewebsites.net/api/GetProduct?productId={value}"
@@ -58,9 +56,7 @@ def validate_input(value, input_type: str) -> bool:
     return False
 
 
-def generate_payload(
-    userId, productId, rating, timestamp, id, location=None, notes=None
-):
+def generate_payload(userId, productId, rating, timestamp, id, location=None, notes=None):
     json_payload = {
         "userId": userId,
         "productId": productId,
@@ -134,6 +130,4 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     container = create_cosmos_container_useable()
     container.create_item(body=my_json)
 
-    return func.HttpResponse(
-        body=request_json, status_code=200, mimetype="application/json"
-    )
+    return func.HttpResponse(body=request_json, status_code=200, mimetype="application/json")
