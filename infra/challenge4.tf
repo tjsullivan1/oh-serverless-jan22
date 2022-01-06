@@ -81,6 +81,7 @@ resource "azurerm_api_management_api" "products" {
   display_name        = "Products API"
   path                = "products"
   protocols           = ["https"]
+  service_url         = "https://serverlessohapi.azurewebsites.net/api"
 }
 
 
@@ -92,6 +93,7 @@ resource "azurerm_api_management_api" "users" {
   display_name        = "Users API"
   path                = "users"
   protocols           = ["https"]
+  service_url         = "https://serverlessohapi.azurewebsites.net/api"
 }
 
 
@@ -103,6 +105,7 @@ resource "azurerm_api_management_api" "ratings" {
   display_name        = "Ratings API"
   path                = "ratings"
   protocols           = ["https"]
+  service_url         = "https://challenge32-53i8.azurewebsites.net/api"
 }
 resource "azurerm_api_management_api" "CreateRating" {
   name                = "CreateRating"
@@ -112,6 +115,7 @@ resource "azurerm_api_management_api" "CreateRating" {
   display_name        = "CreateRating"
   path                = "CreateRating"
   protocols           = ["https"]
+  service_url         = "https://challenge32-53i8.azurewebsites.net/api"
 }
 
 resource "azurerm_api_management_product_api" "mobileUsers" {
@@ -163,4 +167,34 @@ resource "azurerm_api_management_product_api" "externalProducts" {
   product_id          = azurerm_api_management_product.external.product_id
   api_management_name = azurerm_api_management.challenge4.name
   resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_api_operation" "createRating" {
+  operation_id        = "createRating"
+  api_name            = azurerm_api_management_api.CreateRating.name
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+  display_name        = "Create Rating"
+  method              = "POST"
+  url_template        = "/CreateRating"
+  description         = "This can only be done by the logged in user."
+
+  response {
+    status_code = 200
+  }
+}
+
+resource "azurerm_api_management_api_operation" "getRating" {
+  operation_id        = "getRating"
+  api_name            = azurerm_api_management_api.ratings.name
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+  display_name        = "Get Rating"
+  method              = "GET"
+  url_template        = "/GetRating?ratingId={id}"
+  description         = "This can only be done by the logged in user."
+
+  response {
+    status_code = 200
+  }
 }
