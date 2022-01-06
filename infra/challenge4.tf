@@ -258,3 +258,53 @@ resource "azurerm_api_management_api_operation" "getUser" {
     status_code = 200
   }
 }
+
+resource "azurerm_api_management_product_policy" "internalPolicy" {
+  product_id          = azurerm_api_management_product.internal.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+
+  xml_content = <<XML
+<policies>
+    <inbound>
+        <base />
+        <rate-limit-by-key calls="30" renewal-period="10" counter-key="@(context.Subscription?.Key ?? "anonymous")" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
+XML
+
+}
+
+resource "azurerm_api_management_product_policy" "externalPolicy" {
+  product_id          = azurerm_api_management_product.external.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+
+  xml_content = <<XML
+<policies>
+    <inbound>
+        <base />
+        <rate-limit-by-key calls="60" renewal-period="15" counter-key="@(context.Subscription?.Key ?? "anonymous")" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
+XML
+
+}
