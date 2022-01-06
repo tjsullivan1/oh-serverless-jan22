@@ -8,7 +8,7 @@ resource "random_string" "suffix" {
 
 locals {
   challenge_name = "challenge32"
-  kv_id = "/subscriptions/8b63fe10-d76a-4f8f-81ce-7a5a8b911779/resourceGroups/rg-core-it/providers/Microsoft.KeyVault/vaults/tjs-kv-premium"
+  kv_id          = "/subscriptions/8b63fe10-d76a-4f8f-81ce-7a5a8b911779/resourceGroups/rg-core-it/providers/Microsoft.KeyVault/vaults/tjs-kv-premium"
 }
 
 data "azurerm_key_vault" "challenge3" {
@@ -50,7 +50,7 @@ resource "azurerm_function_app" "challenge3" {
   storage_account_access_key = azurerm_storage_account.stafach3.primary_access_key
   os_type                    = "linux"
   version                    = "~4"
-  
+
   site_config {
     linux_fx_version = "python|3.9"
   }
@@ -59,11 +59,11 @@ resource "azurerm_function_app" "challenge3" {
     type = "SystemAssigned"
   }
 
-  app_settings = {    
-    AZURE_COSMOSDB_CONNECTION_STRING = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_conn_string.name})"
-    AZURE_COSMOSDB_DATABASE_NAME = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_sql_db_name.name})"
-    AZURE_COSMOSDB_COLLECTION = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_sql_collection.name})"
-    APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.challenge3.instrumentation_key
+  app_settings = {
+    AZURE_COSMOSDB_CONNECTION_STRING      = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_conn_string.name})"
+    AZURE_COSMOSDB_DATABASE_NAME          = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_sql_db_name.name})"
+    AZURE_COSMOSDB_COLLECTION             = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_sql_collection.name})"
+    APPINSIGHTS_INSTRUMENTATIONKEY        = azurerm_application_insights.challenge3.instrumentation_key
     APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.challenge3.connection_string
     # SCM_DO_BUILD_DURING_DEPLOYMENT = "true"
     # ENABLE_ORYX_BUILD = "true"
