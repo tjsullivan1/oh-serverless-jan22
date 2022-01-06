@@ -7,11 +7,11 @@ resource "random_string" "suffix4" {
 }
 
 locals {
-  challenge_name = "challenge4"
+  challenge4_name = "challenge4"
 }
 
 resource "azurerm_resource_group" "rg4" {
-  name     = "rg-${local.challenge_name}-${random_string.suffix.result}"
+  name     = "rg-${local.challenge4_name}-${random_string.suffix.result}"
   location = "East US"
 }
 
@@ -26,7 +26,7 @@ resource "azurerm_resource_group" "rg4" {
 
 
 resource "azurerm_api_management" "challenge4" {
-  name                = "apim-${local.challenge_name}-${random_string.suffix.result}"
+  name                = "apim-${local.challenge4_name}-${random_string.suffix.result}"
   location            = azurerm_resource_group.rg4.location
   resource_group_name = azurerm_resource_group.rg4.name
   publisher_name      = "Sullivan Enterprises"
@@ -68,4 +68,24 @@ resource "azurerm_api_management_product" "external" {
   subscription_required = true
   approval_required     = true
   published             = true
+}
+
+resource "azurerm_api_management_api" "GetProduct" {
+  name                = "GetProduct"
+  api_management_name   = azurerm_api_management.challenge4.name
+  resource_group_name   = azurerm_resource_group.challenge4.name
+  revision            = "1"
+  display_name        = "Example API"
+  path                = "example"
+  protocols           = ["https"]
+}
+
+resource "azurerm_api_management_api" "GetUser" {
+  name                = "GetUser"
+  api_management_name   = azurerm_api_management.challenge4.name
+  resource_group_name   = azurerm_resource_group.challenge4.name
+  revision            = "1"
+  display_name        = "Example API"
+  path                = "example"
+  protocols           = ["https"]
 }
