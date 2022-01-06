@@ -198,3 +198,63 @@ resource "azurerm_api_management_api_operation" "getRating" {
     status_code = 200
   }
 }
+
+resource "azurerm_api_management_api_operation" "getRatings" {
+  operation_id        = "getRatings"
+  api_name            = azurerm_api_management_api.ratings.name
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+  display_name        = "Get Ratings"
+  method              = "GET"
+  url_template        = "/GetRatings"
+  description         = "This can only be done by the logged in user."
+
+  response {
+    status_code = 200
+  }
+}
+
+resource "azurerm_api_management_api_operation" "getProducts" {
+  operation_id        = "getProducts"
+  api_name            = azurerm_api_management_api.products.name
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+  display_name        = "Get Products"
+  method              = "GET"
+  url_template        = "/GetProducts"
+  description         = "This can only be done by the logged in user."
+
+  response {
+    status_code = 200
+  }
+}
+
+resource "azurerm_api_management_api_operation" "getProduct" {
+  operation_id        = "getProduct"
+  api_name            = azurerm_api_management_api.products.name
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+  display_name        = "Get Product"
+  method              = "GET"
+  url_template        = "/GetProduct"
+  description         = "This can only be done by the logged in user."
+
+  response {
+    status_code = 200
+  }
+}
+
+resource "azurerm_api_management_api_operation" "getUser" {
+  operation_id        = "getUser"
+  api_name            = azurerm_api_management_api.users.name
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+  display_name        = "Get User"
+  method              = "GET"
+  url_template        = "/GetUser"
+  description         = "This can only be done by the logged in user."
+
+  response {
+    status_code = 200
+  }
+}
