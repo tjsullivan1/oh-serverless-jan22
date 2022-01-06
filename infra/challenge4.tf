@@ -45,8 +45,8 @@ resource "azurerm_api_management_product" "mobile" {
   api_management_name   = azurerm_api_management.challenge4.name
   resource_group_name   = azurerm_resource_group.rg4.name
   display_name          = "Mobile Applications"
-  subscription_required = true
-  approval_required     = true
+  subscription_required = false
+  approval_required     = false
   published             = true
 }
 
@@ -55,8 +55,8 @@ resource "azurerm_api_management_product" "internal" {
   api_management_name   = azurerm_api_management.challenge4.name
   resource_group_name   = azurerm_resource_group.rg4.name
   display_name          = "Internal Users"
-  subscription_required = true
-  approval_required     = true
+  subscription_required = false
+  approval_required     = false
   published             = true
 }
 
@@ -65,27 +65,151 @@ resource "azurerm_api_management_product" "external" {
   api_management_name   = azurerm_api_management.challenge4.name
   resource_group_name   = azurerm_resource_group.rg4.name
   display_name          = "External Users"
-  subscription_required = true
-  approval_required     = true
+  subscription_required = false
+  approval_required     = false
   published             = true
 }
 
 resource "azurerm_api_management_api" "GetProduct" {
   name                = "GetProduct"
-  api_management_name   = azurerm_api_management.challenge4.name
-  resource_group_name   = azurerm_resource_group.rg4.name
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
   revision            = "1"
   display_name        = "GetProduct"
   path                = "GetProduct"
   protocols           = ["https"]
 }
 
+resource "azurerm_api_management_api" "GetProducts" {
+  name                = "GetProducts"
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+  revision            = "1"
+  display_name        = "GetProducts"
+  path                = "GetProducts"
+  protocols           = ["https"]
+}
+
 resource "azurerm_api_management_api" "GetUser" {
   name                = "GetUser"
-  api_management_name   = azurerm_api_management.challenge4.name
-  resource_group_name   = azurerm_resource_group.rg4.name
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
   revision            = "1"
   display_name        = "GetUser"
   path                = "GetUser"
   protocols           = ["https"]
+}
+
+resource "azurerm_api_management_api" "CreateRating" {
+  name                = "CreateRating"
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+  revision            = "1"
+  display_name        = "CreateRating"
+  path                = "CreateRating"
+  protocols           = ["https"]
+}
+
+resource "azurerm_api_management_api" "GetRating" {
+  name                = "GetRating"
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+  revision            = "1"
+  display_name        = "GetRating"
+  path                = "GetRating"
+  protocols           = ["https"]
+}
+
+resource "azurerm_api_management_api" "GetRatings" {
+  name                = "GetRatings"
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+  revision            = "1"
+  display_name        = "GetRatings"
+  path                = "GetRatings"
+  protocols           = ["https"]
+}
+
+resource "azurerm_api_management_product_api" "mobileGetUser" {
+  api_name            = azurerm_api_management_api.GetUser.name
+  product_id          = azurerm_api_management_product.mobile.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "mobileGetProduct" {
+  api_name            = azurerm_api_management_api.GetProduct.name
+  product_id          = azurerm_api_management_product.mobile.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "mobileGetProducts" {
+  api_name            = azurerm_api_management_api.GetProducts.name
+  product_id          = azurerm_api_management_product.mobile.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "mobileCreateRating" {
+  api_name            = azurerm_api_management_api.CreateRating.name
+  product_id          = azurerm_api_management_product.mobile.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "mobileGetRating" {
+  api_name            = azurerm_api_management_api.GetRating.name
+  product_id          = azurerm_api_management_product.mobile.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "mobileGetRatings" {
+  api_name            = azurerm_api_management_api.GetRatings.name
+  product_id          = azurerm_api_management_product.mobile.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "internalGetProduct" {
+  api_name            = azurerm_api_management_api.GetProduct.name
+  product_id          = azurerm_api_management_product.internal.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "internalGetProducts" {
+  api_name            = azurerm_api_management_api.GetProducts.name
+  product_id          = azurerm_api_management_product.internal.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "internalGetRating" {
+  api_name            = azurerm_api_management_api.GetRating.name
+  product_id          = azurerm_api_management_product.internal.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "internalGetRatings" {
+  api_name            = azurerm_api_management_api.GetRatings.name
+  product_id          = azurerm_api_management_product.internal.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "externalGetProduct" {
+  api_name            = azurerm_api_management_api.GetProduct.name
+  product_id          = azurerm_api_management_product.external.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
+}
+
+resource "azurerm_api_management_product_api" "externalGetProducts" {
+  api_name            = azurerm_api_management_api.GetProducts.name
+  product_id          = azurerm_api_management_product.external.product_id
+  api_management_name = azurerm_api_management.challenge4.name
+  resource_group_name = azurerm_resource_group.rg4.name
 }
