@@ -27,7 +27,9 @@ def query_cosmos_db_by_rating(container, ratingId):
     logging.info(f"querying by rating {ratingId}.")
     rating_query = f"SELECT * FROM r WHERE r.id='{ratingId}'"
     logging.info(f"query is going to be {rating_query}")
-    items = list(container.query_items(query=rating_query, enable_cross_partition_query=True))
+    items = list(
+        container.query_items(query=rating_query, enable_cross_partition_query=True)
+    )
 
     return items
 
@@ -56,12 +58,18 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         q_result = query_cosmos_db_by_rating(container, ratingId)
         if len(q_result) > 1:
             return func.HttpResponse(
-                '{"response": "Expected a single item response."}', status_code=422, mimetype="application/json"
+                '{"response": "Expected a single item response."}',
+                status_code=422,
+                mimetype="application/json",
             )
 
         result_json = json.dumps(q_result[0])
-        return func.HttpResponse(result_json, status_code=200, mimetype="application/json")
+        return func.HttpResponse(
+            result_json, status_code=200, mimetype="application/json"
+        )
     else:
         return func.HttpResponse(
-            '{"response": "Expected a ratingId parameter."}', status_code=400, mimetype="application/json"
+            '{"response": "Expected a ratingId parameter."}',
+            status_code=400,
+            mimetype="application/json",
         )

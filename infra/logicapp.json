@@ -8,7 +8,7 @@
         },
         "workflows_functions_uri": {
             "defaultValue": "la-oh2",
-            "type": "String"  
+            "type": "String"
         },
         "location": {
             "type": "string",

@@ -27,7 +27,9 @@ def query_cosmos_db_by_user(container, userId):
     logging.info(f"querying by user {userId}.")
     user_query = f"SELECT * FROM r WHERE r.userId='{userId}'"
     logging.info(f"query is going to be {user_query}")
-    items = list(container.query_items(query=user_query, enable_cross_partition_query=True))
+    items = list(
+        container.query_items(query=user_query, enable_cross_partition_query=True)
+    )
 
     return items
 
@@ -67,8 +69,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         result_json = json.dumps(q_result)
         logger.debug(f"Json of results is {result_json}")
 
-        return func.HttpResponse(result_json, status_code=200, mimetype="application/json")
+        return func.HttpResponse(
+            result_json, status_code=200, mimetype="application/json"
+        )
     else:
         return func.HttpResponse(
-            '{"response": "Expected a ratingId parameter."}', status_code=400, mimetype="application/json"
+            '{"response": "Expected a ratingId parameter."}',
+            status_code=400,
+            mimetype="application/json",
         )

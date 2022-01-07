@@ -2,14 +2,14 @@
 # The Python Worker is managed by Azure Functions platform
 # Manually managing azure-functions-worker may cause unexpected issues
 
-azure-functions
-requests
 azure-core
 azure-cosmos
+azure-functions
 certifi==2019.11.28
 chardet==3.0.4
 idna==2.8
+opencensus-ext-azure
+requests
 requests
 six==1.13.0
 urllib3
-opencensus-ext-azure
