@@ -26,5 +26,5 @@ resource "azurerm_storage_account" "c6sa" {
 resource "azurerm_storage_container" "c6sa" {
   name                  = "raw"
   storage_account_name  = azurerm_storage_account.c6sa.name
-container_access_type = "private"
+  container_access_type = "private"
 }
