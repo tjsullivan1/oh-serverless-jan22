@@ -22,7 +22,7 @@ repos:
     - id: flake8
 repos:
 - repo: https://github.com/antonbabenko/pre-commit-terraform
-  rev: 1.62.3 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
+  rev: v1.62.3 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
   hooks:
     - id: terraform_fmt
     - id: terraform_docs
