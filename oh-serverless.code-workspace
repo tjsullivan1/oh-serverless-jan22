@@ -1,0 +1,25 @@
+{
+    "folders": [
+		{
+			"path": "batch-processor"
+		},
+		{
+			"path": "infra"
+		}
+	],
+    "settings": {
+        "debug.internalConsoleOptions": "neverOpen"
+    },
+    "launch": {
+        "configurations": [],
+        "compounds": [
+            {
+                "name": "Attach to both apps",
+                "configurations": [
+                    "Attach to batch processor",
+                    "Attach to ratings_api"
+                ]
+            }
+        ]
+    }
+}
