@@ -26,13 +26,13 @@ resource "azurerm_resource_group" "rg4" {
 
 
 resource "azurerm_api_management" "challenge4" {
-  name                = "apim-${local.challenge4_name}-${random_string.suffix.result}"
+  name                = "apim-${local.challenge4_name}-${random_string.suffix.result}-2"
   location            = azurerm_resource_group.rg4.location
   resource_group_name = azurerm_resource_group.rg4.name
   publisher_name      = "Sullivan Enterprises"
   publisher_email     = "tim@sullivanenterprises.org"
 
-  sku_name = "Developer_1"
+  sku_name = "Consumption_1"
 
 
   identity {
