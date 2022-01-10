@@ -37,7 +37,6 @@ resource "azurerm_storage_container" "c6sa2" {
 
 
 resource "azurerm_storage_container" "c6sa3" {
-  name                  = "raw3"
-  storage_account_name  = azurerm_storage_account.c6sa.name
-  container_access_type = "private"
+  name                 = "raw3"
+  storage_account_name = azurerm_storage_account.c6sa.name
 }
