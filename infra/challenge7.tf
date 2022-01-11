@@ -67,7 +67,7 @@ resource "azurerm_function_app" "challenge7" {
 
 
 resource "azurerm_key_vault_secret" "event_hub_conn" {
-  name         = "ehohc7awe3_RootManageSharedAccessKey_EVENTHUB"
+  name         = "EventHubConnectionString"
   value        = data.azurerm_eventhub_namespace_authorization_rule.c7.primary_connection_string
   key_vault_id = local.kv_id
 }
