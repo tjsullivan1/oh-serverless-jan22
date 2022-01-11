@@ -6,7 +6,7 @@
       "name": "event",
       "direction": "in",
       "eventHubName": "ohc7",
-      "connection": "ehohc7awe3_RootManageSharedAccessKey_EVENTHUB",
+      "connection": "EventHubConnectionString",
       "cardinality": "many",
       "consumerGroup": "$Default",
       "dataType": "binary"

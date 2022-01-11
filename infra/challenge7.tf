@@ -55,10 +55,10 @@ resource "azurerm_function_app" "challenge7" {
   }
 
   app_settings = {
-    ehohc7awe3_RootManageSharedAccessKey_EVENTHUB = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.event_hub_conn.name})"
-    AzureCosmosDBConnectionString                 = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_conn_string.name})"
-    APPINSIGHTS_INSTRUMENTATIONKEY                = azurerm_application_insights.challenge3.instrumentation_key
-    APPLICATIONINSIGHTS_CONNECTION_STRING         = azurerm_application_insights.challenge3.connection_string
+    EventHubConnectionString              = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.event_hub_conn.name})"
+    AzureCosmosDBConnectionString         = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault.challenge3.vault_uri}secrets/${azurerm_key_vault_secret.cosmos_conn_string.name})"
+    APPINSIGHTS_INSTRUMENTATIONKEY        = azurerm_application_insights.challenge3.instrumentation_key
+    APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.challenge3.connection_string
     # SCM_DO_BUILD_DURING_DEPLOYMENT = "true"
     # ENABLE_ORYX_BUILD = "true"
   }
