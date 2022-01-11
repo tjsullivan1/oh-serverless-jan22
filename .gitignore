@@ -131,3 +131,6 @@ dmypy.json
 # Ignore Terraform
 .terraform/
 .terraform.lock.hcl
+
+# Ignore scratch files
+temp.py
