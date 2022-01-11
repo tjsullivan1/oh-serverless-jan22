@@ -1,7 +1,7 @@
 locals {
-  c7_suffix      = "awe3"
-  challenge_name = "challenge7"
-  kv_id          = "/subscriptions/8b63fe10-d76a-4f8f-81ce-7a5a8b911779/resourceGroups/rg-core-it/providers/Microsoft.KeyVault/vaults/tjs-kv-premium"
+  c7_suffix       = "awe3"
+  challenge_name7 = "challenge7"
+  kv_id           = "/subscriptions/8b63fe10-d76a-4f8f-81ce-7a5a8b911779/resourceGroups/rg-core-it/providers/Microsoft.KeyVault/vaults/tjs-kv-premium"
 }
 
 data "azurerm_eventhub_namespace_authorization_rule" "c7" {
@@ -12,12 +12,12 @@ data "azurerm_eventhub_namespace_authorization_rule" "c7" {
 
 
 resource "azurerm_resource_group" "rgch7" {
-  name     = "rg-tjs-oh-${local.challenge_name}-${local.c7_suffix}"
+  name     = "rg-tjs-oh-${local.challenge_name7}-${local.c7_suffix}"
   location = "eastus"
 }
 
 resource "azurerm_storage_account" "stafach7" {
-  name                     = "stafa${local.challenge_name}${local.c7_suffix}"
+  name                     = "stafa${local.challenge_name7}${local.c7_suffix}"
   resource_group_name      = azurerm_resource_group.rgch7.name
   location                 = azurerm_resource_group.rgch7.location
   account_tier             = "Standard"
@@ -25,7 +25,7 @@ resource "azurerm_storage_account" "stafach7" {
 }
 
 resource "azurerm_app_service_plan" "aspch7" {
-  name                = "asp-tjs-${local.challenge_name}"
+  name                = "asp-tjs-${local.challenge_name7}"
   location            = azurerm_resource_group.rgch7.location
   resource_group_name = azurerm_resource_group.rgch7.name
   kind                = "linux"
@@ -38,7 +38,7 @@ resource "azurerm_app_service_plan" "aspch7" {
 }
 
 resource "azurerm_function_app" "challenge7" {
-  name                       = "${local.challenge_name}-${local.c7_suffix}"
+  name                       = "${local.challenge_name7}-${local.c7_suffix}"
   location                   = azurerm_resource_group.rgch7.location
   resource_group_name        = azurerm_resource_group.rgch7.name
   app_service_plan_id        = azurerm_app_service_plan.aspch7.id
