@@ -16,6 +16,8 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH2: 'challenge2/app' # set this to the path to your web app project, defaults to the repository root
   AZURE_WEBAPP_NAME3: "challenge32-53i8" # TODO: figure out how to query this from active state
   AZURE_WEBAPP_PACKAGE_PATH3: 'ratings_api/' # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_NAME6: "tjs-oh-al82" # TODO: figure out how to query this from active state
+  AZURE_WEBAPP_PACKAGE_PATH6: 'batch-processor/' # set this to the path to your web app project, defaults to the repository root
 
 jobs:
   build_challenge2:
@@ -70,6 +72,36 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME3 }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH3 }}
+
+    - name: logout
+      run: |
+        az logout
+
+  build_challenge6:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        pushd './${{ env.AZURE_WEBAPP_PACKAGE_PATH6 }}'
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+        popd
+    - name: 'Run Azure Functions Action'
+      uses: Azure/functions-action@v1
+      id: fa
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME6 }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH6 }}
 
     - name: logout
       run: |
