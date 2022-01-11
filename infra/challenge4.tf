@@ -32,7 +32,7 @@ resource "azurerm_api_management" "challenge4" {
   publisher_name      = "Sullivan Enterprises"
   publisher_email     = "tim@sullivanenterprises.org"
 
-  sku_name = "Consumption"
+  sku_name = "Consumption_0"
 
 
   identity {
