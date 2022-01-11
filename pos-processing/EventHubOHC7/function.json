@@ -8,8 +8,7 @@
       "eventHubName": "ohc7",
       "connection": "EventHubConnectionString",
       "cardinality": "many",
-      "consumerGroup": "$Default",
-      "dataType": "binary"
+      "consumerGroup": "$Default"
     },
     {
       "type": "cosmosDB",
