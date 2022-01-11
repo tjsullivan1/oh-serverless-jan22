@@ -1,7 +1,6 @@
 locals {
   c7_suffix       = "awe3"
   challenge_name7 = "challenge7"
-  kv_id           = "/subscriptions/8b63fe10-d76a-4f8f-81ce-7a5a8b911779/resourceGroups/rg-core-it/providers/Microsoft.KeyVault/vaults/tjs-kv-premium"
 }
 
 data "azurerm_eventhub_namespace_authorization_rule" "c7" {
